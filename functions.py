@@ -3,6 +3,7 @@ def get_todos():
         localtodos=file.readlines()
     return localtodos
 
+
 def updatetodos(updatedtodo):
     with open("todos.txt",'w') as file:
         file.writelines(updatedtodo)

@@ -1,18 +1,28 @@
-
+from zip_convertor import zip_convertor
 import FreeSimpleGUI as sg
 
-feet_label = sg.Text("Enter feet: ")
-feet_input = sg.Input()
+label1=sg.Text("enter files to compress")
+input1=sg.Input()
+button1=sg.FilesBrowse("choose",key="filepaths")
 
-inches_label = sg.Text("Enter inches: ")
-inches_input = sg.Input()
+label2=sg.Text("enter directory to put zip file")
+input2=sg.Input()
+button2=sg.FolderBrowse("choose",key="folder")
 
-button = sg.Button("Convert")
+convertbu=sg.Button("Convert")
+output_label=sg.Text(key='output',text_color='green')
 
-window = sg.Window("Convertor",
-                   layout=[[feet_label, feet_input],
-                           [inches_label, inches_input],
-                           [button]])
+layout=[[label1,input1,button1],
+        [label2,input2,button2],
+        [convertbu,output_label]]
 
-window.read()
+window=sg.Window("File Compressor",layout=layout)
+
+while True:
+    event,values=window.read()
+    filepaths=values['filepaths'].split(';')
+    folder=values['folder']
+    zip_convertor(filepaths,folder)
+    window['output'].update(value="Compression complete")
+
 window.close()
