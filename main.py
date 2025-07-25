@@ -1,17 +1,22 @@
 import FreeSimpleGUI as gu
 import functions
 import time
+import os
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt",'w') as file:
+        pass
 
 gu.theme('Black')
 clock=gu.Text('',key='clock',text_color='orange')
 label=gu.Text("type a todo")
 input_box=gu.InputText(tooltip="Enter a todo",key="todo")
-add_button=gu.Button("ADD")
+add_button=gu.Button(image_source='add.png',key="ADD",size=1,mouseover_colors='green',tooltip="ADD A TODO")
 list_of_todos=gu.Listbox(values=functions.get_todos(),
                          key='todos',
                          enable_events=True,size=[45,10])
 edit_button=gu.Button("EDIT")
-comp_button=gu.Button("COMPLETE")
+comp_button=gu.Button(image_source='complete.png',key='COMPLETE')
 exit_button=gu.Button("EXIT")
 
 
@@ -24,6 +29,8 @@ window=gu.Window("ToDo App",
 while True:
     event,values=window.read(timeout=200)
     window['clock'].update(value=time.strftime('%d-%m-%Y,%H:%M:%S %p'))
+    print(event)
+    print(values)
     match event:
         case 'ADD':
             todos=functions.get_todos()
@@ -59,6 +66,9 @@ while True:
         case 'todos':
             window['todo'].update(value=values['todos'][0])
         case gu.WIN_CLOSED:
-            break
+            try:
+                break
+            except AttributeError:
+                break
 
 window.close()
