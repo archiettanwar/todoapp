@@ -29,8 +29,6 @@ window=gu.Window("ToDo App",
 while True:
     event,values=window.read(timeout=200)
     window['clock'].update(value=time.strftime('%d-%m-%Y,%H:%M:%S %p'))
-    print(event)
-    print(values)
     match event:
         case 'ADD':
             todos=functions.get_todos()
@@ -66,9 +64,6 @@ while True:
         case 'todos':
             window['todo'].update(value=values['todos'][0])
         case gu.WIN_CLOSED:
-            try:
-                break
-            except AttributeError:
-                break
+            break
 
 window.close()
